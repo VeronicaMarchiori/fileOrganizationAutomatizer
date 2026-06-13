@@ -3,9 +3,9 @@ import sys
 
 def getCurrentDirectory() -> Path:
     if  getattr(sys,"frozen", False):
-        return path(sys.executable).parent
+        return Path(sys.executable).parent
     
-    return(__file__).parent.parent
+    return Path(__file__).parent.parent
 
 def listFiles(directory: Path) -> list[Path]:
     return [item for item in directory.iterdir() if item.is_file()]

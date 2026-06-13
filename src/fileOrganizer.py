@@ -17,6 +17,9 @@ class FileOrganizer:
             item for item in self.currentDirectory.iterdir()
             if item.is_file()
         ]
+    
+    def getFileExtension(self, file: Path) -> str:
+        return file.suffix.lower().replace(".", "")
 
     def showFiles(self):
         files = self.listFiles()
@@ -25,4 +28,6 @@ class FileOrganizer:
         print(f"{len(files)} arquivo(s) encontrados:")
 
         for file in files:
-            print(f"- {file.name}")
+            extension = self.getFileExtension(file)
+            print(f"- {file.name} | Extensão: {extension}" )
+        

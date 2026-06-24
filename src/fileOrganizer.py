@@ -45,18 +45,25 @@ class FileOrganizer:
     def getFileExtension(self, file: Path) -> str:
         return file.suffix.lower().replace(".", "")
 
-    def showFiles(self):
+    def organizeFiles(self):
         files = self.listFiles()
-
-        print(f"Pasta analisada: {self.currentDirectory}")
-        print(f"{len(files)} arquivo(s) encontrados:")
 
         for file in files:
             extension = self.getFileExtension(file)
             category = self.getFileCategory(extension)
 
             destinationDirectory = self.createCategoryDirectory(category)
+
             self.moveFile(file, destinationDirectory)
 
-            print(f"- {file.name} -> {extension} -> {category}" )
+    def showFiles(self):
+        files = self.listFiles()
+
+        print(f"Pasta Analisada: {self.currentDirectory}")
+        print(f"{len(files)} arquivo(s) encontrados")
+    
+        for file in files:
+            extension = self.getFileExtension(file)
+            category = self.getFileCategory(extension)
         
+        print(f"- {file.name} -> {extension} -> {category}")

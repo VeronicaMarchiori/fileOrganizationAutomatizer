@@ -17,6 +17,13 @@ class FileOrganizer:
         
         return "Others"
 
+    def createCategoryDirectory(self, category: str) -> Path:
+        categoryDirectory = self.currentDirectory / category
+
+        categoryDirectory.mkdir(exist_ok=True)
+
+        return categoryDirectory
+
     def getCurrentDirectory(self) -> Path:
         if getattr(sys, "frozen", False):
             return Path(sys.executable).parent
@@ -42,5 +49,7 @@ class FileOrganizer:
             extension = self.getFileExtension(file)
             category = self.getFileCategory(extension)
 
-            print(f"- {file.name} | Extensão: {extension} | Categoria: {category}" )
+            self.createCategoryDirectory(category)
+
+            print(f"- {file.name} -> {extension} -> {category}" )
         

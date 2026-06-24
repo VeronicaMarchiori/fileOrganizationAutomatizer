@@ -21,6 +21,9 @@ FILE_CATEGORIES = {
 
     "Design Projects": [
         "sai",
+        "sai1",
+        "sai2",
+        "sai3",
         "psd",
         "kra",
         "clip",

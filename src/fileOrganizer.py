@@ -1,3 +1,4 @@
+import shutil
 from pathlib import Path
 from fileCategories import FILE_CATEGORIES
 import sys
@@ -17,6 +18,11 @@ class FileOrganizer:
         
         return "Others"
 
+    def moveFile(self, file: Path, destinationDirectory: Path):
+        destinationPath = destinationDirectory / file.name
+
+        shutil.move(str(file), str(destinationPath))
+
     def createCategoryDirectory(self, category: str) -> Path:
         categoryDirectory = self.currentDirectory / category
 
@@ -26,9 +32,9 @@ class FileOrganizer:
 
     def getCurrentDirectory(self) -> Path:
         if getattr(sys, "frozen", False):
-            return Path(sys.executable).parent
+            return Path(__file__).parent
 
-        return Path(__file__).parent.parent
+        return Path(__file__).parent.parent / "testFolder"
 
     def listFiles(self) -> list[Path]:
         return [
@@ -49,7 +55,8 @@ class FileOrganizer:
             extension = self.getFileExtension(file)
             category = self.getFileCategory(extension)
 
-            self.createCategoryDirectory(category)
+            destinationDirectory = self.createCategoryDirectory(category)
+            self.moveFile(file, destinationDirectory)
 
             print(f"- {file.name} -> {extension} -> {category}" )
         

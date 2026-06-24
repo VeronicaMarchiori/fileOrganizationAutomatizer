@@ -1,6 +1,7 @@
 import shutil
 from pathlib import Path
 from fileRules import shouldIgnoreFile
+from systemSafety import isSafeDirectory
 from fileCategories import FILE_CATEGORIES
 import sys
 
@@ -47,12 +48,16 @@ class FileOrganizer:
         return file.suffix.lower().replace(".", "")
 
     def organizeFiles(self):
+        if not isSafeDirectory(self.currentDirectory):
+            print("Essa pasta é protegida e não pode ser organizada.")
+            return
+        
         files = self.listFiles()
 
         for file in files:
             if shouldIgnoreFile(file):
                 continue
-            
+
             extension = self.getFileExtension(file)
             category = self.getFileCategory(extension)
 

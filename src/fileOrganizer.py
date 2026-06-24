@@ -1,5 +1,6 @@
 import shutil
 from pathlib import Path
+from fileRules import shouldIgnoreFile
 from fileCategories import FILE_CATEGORIES
 import sys
 
@@ -49,6 +50,9 @@ class FileOrganizer:
         files = self.listFiles()
 
         for file in files:
+            if shouldIgnoreFile(file):
+                continue
+            
             extension = self.getFileExtension(file)
             category = self.getFileCategory(extension)
 

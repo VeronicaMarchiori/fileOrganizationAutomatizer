@@ -1,10 +1,21 @@
 from pathlib import Path
+from fileCategories import FILE_CATEGORIES
 import sys
 
 
 class FileOrganizer:
     def __init__(self):
         self.currentDirectory = self.getCurrentDirectory()
+    
+    def getFileCategory(self, extension: str) -> str:
+        if not extension:
+            return "NoExtension"
+        
+        for category, extensions in FILE_CATEGORIES.items():
+            if extension in extensions:
+                return category
+        
+        return "Others"
 
     def getCurrentDirectory(self) -> Path:
         if getattr(sys, "frozen", False):
@@ -29,5 +40,7 @@ class FileOrganizer:
 
         for file in files:
             extension = self.getFileExtension(file)
-            print(f"- {file.name} | Extensão: {extension}" )
+            category = self.getFileCategory(extension)
+
+            print(f"- {file.name} | Extensão: {extension} | Categoria: {category}" )
         

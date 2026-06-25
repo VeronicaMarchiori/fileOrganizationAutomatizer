@@ -21,10 +21,24 @@ class FileOrganizer:
         
         return "Others"
 
-    def moveFile(self, file: Path, destinationDirectory: Path):
-        destinationPath = destinationDirectory / file.name
+    def moveFile(self, file: Path, destinationDirectory: Path) -> tuple[bool,str]:
+        try:
+            destinationPath = destinationDirectory / file.name
+            shutil.move(str(file), str(destinationPath))
 
-        shutil.move(str(file), str(destinationPath))
+            return True, ""
+        
+        except PermissionError:
+            return False, "Permissão negada ou arquivo em uso."
+        
+        except FileExistsError:
+            return False, "Já existe um arquivo com este nome no destino."
+        
+        except OSError as error:
+            return False, f"Erro do sistema: {error}"
+        
+        except Exception as error:
+            return False, f"Erro inesperado: {error}"
 
     def createCategoryDirectory(self, category: str) -> Path:
         categoryDirectory = self.currentDirectory / category
@@ -64,7 +78,13 @@ class FileOrganizer:
 
             destinationDirectory = self.createCategoryDirectory(category)
 
-            self.moveFile(file, destinationDirectory)
+            wasMoved, errorMessage = self.moveFile(file, destinationDirectory)
+
+            if wasMoved:
+                print(f"Movido: {file.name}")
+            else: 
+                print(f"Erro ao mover {file.name}: {errorMessage}")
+
     
     def getOrganizationPreview(self) -> dict[str, int]:
         preview = {}

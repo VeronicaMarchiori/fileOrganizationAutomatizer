@@ -8,10 +8,11 @@ def main ():
     files = organizer.listFiles()
     preview = organizer.getOrganizationPreview()
 
-    console.showHeader()
-    console.showDirectory(organizer.currentDirectory)
-    console.showFilesPreview(files)
-    console.showOrganizationPreview(preview)
+    console.showStartup(
+        organizer.currentDirectory,
+        files,
+        preview
+    )
 
     if not console.askConfirmation():
         console.showCanceledMessage()

@@ -35,3 +35,9 @@ class ConsoleUI:
         
         for category, amount in preview.items():
             print(f"- {category}: {amount} arquivo(s)")
+
+    def showStartup(self, directory, files, preview):
+        self.showHeader()
+        self.showDirectory(directory)
+        self.showFilesPreview(files)
+        self.showOrganizationPreview(preview)

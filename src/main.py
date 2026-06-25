@@ -6,10 +6,12 @@ def main ():
     console = ConsoleUI()
 
     files = organizer.listFiles()
+    preview = organizer.getOrganizationPreview()
 
     console.showHeader()
     console.showDirectory(organizer.currentDirectory)
     console.showFilesPreview(files)
+    console.showOrganizationPreview(preview)
 
     if not console.askConfirmation():
         console.showCanceledMessage()

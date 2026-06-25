@@ -3,6 +3,7 @@ from pathlib import Path
 from fileRules import shouldIgnoreFile
 from systemSafety import isSafeDirectory
 from fileCategories import FILE_CATEGORIES
+from fileRules import shouldIgnoreFile
 import sys
 
 
@@ -64,6 +65,20 @@ class FileOrganizer:
             destinationDirectory = self.createCategoryDirectory(category)
 
             self.moveFile(file, destinationDirectory)
+    
+    def getOrganizationPreview(self) -> dict[str, int]:
+        preview = {}
+        files = self.listFiles()
+
+        for file in files:
+            if shouldIgnoreFile(file):
+                continue
+            extension = self.getFileExtension(file)
+            category = self.getFileCategory(extension)
+
+            preview[category] = preview.get(category,0) + 1
+        return preview
+
 
     def showFiles(self):
         files = self.listFiles()

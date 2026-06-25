@@ -25,3 +25,13 @@ class ConsoleUI:
     
     def waitBeforeClose(self):
         input("\nPressione ENTER para fechar...")
+
+    def showOrganizationPreview(self, preview: dict[str,int]):
+        print("\nResumo da organização:")
+
+        if not preview:
+            print("Nenhum arquivo para organizar.")
+            return
+        
+        for category, amount in preview.items():
+            print(f"- {category}: {amount} arquivo(s)")

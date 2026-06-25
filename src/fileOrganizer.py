@@ -3,7 +3,6 @@ from pathlib import Path
 from fileRules import shouldIgnoreFile
 from systemSafety import isSafeDirectory
 from fileCategories import FILE_CATEGORIES
-from fileRules import shouldIgnoreFile
 import sys
 
 
@@ -21,22 +20,22 @@ class FileOrganizer:
         
         return "Others"
 
-    def moveFile(self, file: Path, destinationDirectory: Path) -> tuple[bool,str]:
+    def moveFile(self, file: Path, destinationDirectory: Path) -> tuple[bool, str]:
         try:
             destinationPath = destinationDirectory / file.name
+
+            destinationPath = self.getAvailableDestinationPath(destinationPath)
+
             shutil.move(str(file), str(destinationPath))
 
             return True, ""
-        
+
         except PermissionError:
             return False, "Permissão negada ou arquivo em uso."
-        
-        except FileExistsError:
-            return False, "Já existe um arquivo com este nome no destino."
-        
+
         except OSError as error:
             return False, f"Erro do sistema: {error}"
-        
+
         except Exception as error:
             return False, f"Erro inesperado: {error}"
 
@@ -111,3 +110,18 @@ class FileOrganizer:
             category = self.getFileCategory(extension)
         
         print(f"- {file.name} -> {extension} -> {category}")
+    
+    def getAvailableDestinationPath(self, destinationPath: Path) -> Path:
+        if not destinationPath.exists():
+            return destinationPath
+
+        counter = 1
+
+        while True:
+            newFileName = f"{destinationPath.stem}_{counter}{destinationPath.suffix}"
+            newDestinationPath = destinationPath.parent / newFileName
+
+            if not newDestinationPath.exists():
+                return newDestinationPath
+            
+            counter += 1

@@ -1,5 +1,10 @@
 # 📂 File Organization Automatizer
 
+![Python](https://img.shields.io/badge/Python-3.14-blue?logo=python)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Version](https://img.shields.io/badge/version-v1.0.0-orange)
+![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey)
+
 Automatically organize your files into categorized folders with optional backup creation.
 
 ## ✨ Features

@@ -30,7 +30,7 @@ def isSafeDirectory(directory: Path) -> bool:
             return False
 
     for item in directory.iterdir():
-        if item.is_dir() and item.namelower() in PROJECT_DIRECTORY_NAMES:
+        if item.is_dir() and item.name.lower() in PROJECT_DIRECTORY_NAMES:
             return False
         
     return True

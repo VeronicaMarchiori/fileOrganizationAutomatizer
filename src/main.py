@@ -18,7 +18,7 @@ def main():
     files = organizer.listFiles()
     preview = organizer.getOrganizationPreview()
 
-    if not files:
+    if not preview:
         console.showHeader()
         console.showDirectory(organizer.currentDirectory)
         print("\nNenhum arquivo encontrado para organizar.")

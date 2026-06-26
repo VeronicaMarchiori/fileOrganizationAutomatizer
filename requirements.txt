@@ -1,0 +1,8 @@
+# Development dependencies
+pyinstaller>=6.21.0
+
+# The application itself only uses Python's standard library:
+# pathlib
+# shutil
+# sys
+# datetime

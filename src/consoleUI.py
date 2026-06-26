@@ -41,3 +41,8 @@ class ConsoleUI:
         self.showDirectory(directory)
         self.showFilesPreview(files)
         self.showOrganizationPreview(preview)
+
+    def askBackup(self) -> bool:
+        answer = input("\nDeseja criar um backup antes da organização? [y/n]: ")
+
+        return answer.lower() == "y"

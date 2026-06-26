@@ -48,9 +48,9 @@ class FileOrganizer:
 
     def getCurrentDirectory(self) -> Path:
         if getattr(sys, "frozen", False):
-            return Path(__file__).parent
+            return Path(sys.executable).parent
 
-        return Path(__file__).parent.parent / "testFolder"
+        return Path(__file__).parent.parent
 
     def listFiles(self) -> list[Path]:
         return [
@@ -97,19 +97,6 @@ class FileOrganizer:
 
             preview[category] = preview.get(category,0) + 1
         return preview
-
-
-    def showFiles(self):
-        files = self.listFiles()
-
-        print(f"Pasta Analisada: {self.currentDirectory}")
-        print(f"{len(files)} arquivo(s) encontrados")
-    
-        for file in files:
-            extension = self.getFileExtension(file)
-            category = self.getFileCategory(extension)
-        
-        print(f"- {file.name} -> {extension} -> {category}")
     
     def getAvailableDestinationPath(self, destinationPath: Path) -> Path:
         if not destinationPath.exists():
